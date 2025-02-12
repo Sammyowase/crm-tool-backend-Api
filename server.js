@@ -1,10 +1,10 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
+const cookieParser = require('cookie-parser');
 const errorHandler = require('./utils/errorHandler');
 const logger = require('./utils/logger');
 
-// Load environment variables from .env file
 dotenv.config();
 
 // Connect to the database
@@ -14,6 +14,7 @@ const app = express();
 
 // Middleware
 app.use(express.json());
+app.use(cookieParser());
 app.use(logger);
 
 // Routes

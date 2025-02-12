@@ -22,7 +22,9 @@ exports.registerUser = async (req, res) => {
       expiresIn: '1h',
     });
 
-    res.status(201).json({ token });
+    res.cookie('token', token, { httpOnly: true });
+
+    res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
@@ -48,9 +50,16 @@ exports.loginUser = async (req, res) => {
       expiresIn: '1h',
     });
 
-    res.json({ token });
+    res.cookie('token', token, { httpOnly: true });
+
+    res.json({ message: 'Logged in successfully' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
   }
+};
+// Logout user
+exports.logoutUser = (req, res) => {
+  res.clearCookie('token');
+  res.json({ message: 'Logged out successfully' });
 };
